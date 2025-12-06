@@ -209,6 +209,18 @@ Please confirm this order to proceed. Thank you for choosing The HAIR Authority 
                 />
               </div>
 
+              {/* Reservation Reminder */}
+              <div className="bg-brand-yellow/20 border-2 border-brand-yellow rounded-lg p-4">
+                <div className="text-center mb-3">
+                  <p className="text-lg font-bold text-brand-blue">
+                    RESERVE A SLOT FOR ₱500
+                  </p>
+                </div>
+                <p className="text-sm text-gray-700 text-center">
+                  <strong>Note:</strong> The reservation is non-refundable. The slot is non-transferable if you are late, cancel, or need to reschedule.
+                </p>
+              </div>
+
               <button
                 onClick={handleProceedToPayment}
                 disabled={!isDetailsValid}
