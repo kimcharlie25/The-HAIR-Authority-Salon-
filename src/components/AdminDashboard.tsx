@@ -9,9 +9,24 @@ import CategoryManager from './CategoryManager';
 import PaymentMethodManager from './PaymentMethodManager';
 import SiteSettingsManager from './SiteSettingsManager';
 
+const ADMIN_PASSWORD = 'Thehairauthority@2026';
+
+// Simple hash to detect password changes — not for security, just session invalidation
+const hashPassword = (pwd: string) => {
+  let hash = 0;
+  for (let i = 0; i < pwd.length; i++) {
+    const char = pwd.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0;
+  }
+  return 'auth_' + hash.toString(36);
+};
+
+const AUTH_HASH = hashPassword(ADMIN_PASSWORD);
+
 const AdminDashboard: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('beracah_admin_auth') === 'true';
+    return localStorage.getItem('beracah_admin_auth') === AUTH_HASH;
   });
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
@@ -232,9 +247,9 @@ const AdminDashboard: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'Thehairauthority@2026') {
+    if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
-      localStorage.setItem('beracah_admin_auth', 'true');
+      localStorage.setItem('beracah_admin_auth', AUTH_HASH);
       setLoginError('');
     } else {
       setLoginError('Invalid password');
